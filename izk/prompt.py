@@ -4,18 +4,16 @@ import traceback
 from prompt_toolkit.shortcuts import prompt
 from prompt_toolkit.history import InMemoryHistory
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
-from prompt_toolkit.contrib.completers import WordCompleter
 from pygments.styles.monokai import MonokaiStyle
 
 from .runner import ZKCommandRunner
-from .lexer import ZkCliLexer, KEYWORDS
+from .lexer import ZkCliLexer
 from .zk import ExtendedKazooClient
 from .completion import ZkCompleter
 
 
 history = InMemoryHistory()
 auto_suggest = AutoSuggestFromHistory()
-completer = WordCompleter(KEYWORDS)
 
 
 def parse_args():
