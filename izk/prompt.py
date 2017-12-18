@@ -6,7 +6,7 @@ from prompt_toolkit.history import InMemoryHistory
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from pygments.styles.monokai import MonokaiStyle
 
-from .runner import ZKCommandRunner
+from .runner import ZkCommandRunner
 from .lexer import ZkCliLexer
 from .zk import ExtendedKazooClient
 from .completion import ZkCompleter
@@ -27,7 +27,7 @@ def main():
     cmd_index = 0
     args = parse_args()
     with ExtendedKazooClient(hosts=args.zk_url, timeout=2) as zkcli:
-        cmdrunner = ZKCommandRunner(zkcli)
+        cmdrunner = ZkCommandRunner(zkcli)
         while True:
             # We need a new completer for each command
             completer = ZkCompleter(zkcli)

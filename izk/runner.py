@@ -17,7 +17,7 @@ STR = r"((?<=')[^']+(?=')|(?<=\")[^\"]+(?=\"))"
 TOKEN = r'(%s)' % '|'.join([COMMAND, PATH, STR])
 
 
-class ZKCommandRunner:
+class ZkCommandRunner:
     """Object in charge of running the zookeeper commands."""
 
     def __init__(self, zkcli):
