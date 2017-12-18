@@ -41,7 +41,7 @@ class ZkCompleter(Completer):
                 self.cache[current_chroot] = self.zkcli.get_children(current_chroot)
 
             completions = [
-                '/' + node
+                '/%s' % (node)
                 for node in self.cache[current_chroot]
                 if node.startswith(current_node)
             ]

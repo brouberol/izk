@@ -17,13 +17,14 @@ auto_suggest = AutoSuggestFromHistory()
 
 
 def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('zk_url')
+    parser = argparse.ArgumentParser(
+        description='CLI for zookeeper with syntax-highlighting and auto-completion')
+    parser.add_argument('zk_url', help='URL of the zookeeper node')
     return parser.parse_args()
 
 
 def main():
-    i = 0
+    cmd_index = 0
     args = parse_args()
     with ExtendedKazooClient(hosts=args.zk_url, timeout=2) as zkcli:
         cmdrunner = ZKCommandRunner(zkcli)
@@ -32,7 +33,7 @@ def main():
             completer = ZkCompleter(zkcli)
             try:
                 cmd = prompt(
-                    '(%d) > ' % (i),
+                    '(%d) > ' % (cmd_index),
                     history=history,
                     auto_suggest=auto_suggest,
                     completer=completer,
@@ -50,7 +51,7 @@ def main():
             except Exception:
                 traceback.print_exc()
             finally:
-                i += 1
+                cmd_index += 1
 
 
 if __name__ == '__main__':
