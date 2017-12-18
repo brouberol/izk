@@ -10,7 +10,7 @@ COMMAND = r'(%s)' % ('|'.join(KEYWORDS))
 # A znode path
 PATH = r'/[^\s]*'
 
-# A srting-value, without the quotes
+# A string-value, without the quotes
 STR = r"((?<=')[^']+(?=')|(?<=\")[^\"]+(?=\"))"
 
 # A CLI user-input token can either be a command, a path or a string
