@@ -11,6 +11,14 @@ class ExtendedKazooClient(KazooClient):
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.stop()
 
+    def stat(self, node_path):
+        try:
+            _, stat = self.get(node_path)
+        except NoNodeError:
+            return None
+        else:
+            return stat
+
     def get_node(self, node_path):
         """Return the JSON-deserialized content of a Zookeeper znode.
 
