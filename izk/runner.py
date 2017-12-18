@@ -45,7 +45,8 @@ class ZKCommandRunner:
         self.zkcli.delete(path)
 
     def run(self, command_str):
-        tokens = self._tokenize(command_str)
-        command, args = tokens[0], tokens[1:]
-        out = getattr(self, command)(*args)
-        return out
+        if command_str:
+            tokens = self._tokenize(command_str)
+            command, args = tokens[0], tokens[1:]
+            out = getattr(self, command)(*args)
+            return out
