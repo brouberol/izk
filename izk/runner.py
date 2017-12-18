@@ -40,7 +40,10 @@ class ZKCommandRunner:
             return node_data
 
     def set(self, path, data):
-        self.zkcli.create(path, data.encode('utf-8'))
+        if not self.zkcli.exists(path):
+            return self.zkcli.create(path, data.encode('utf-8'))
+        else:
+            self.zkcli.set(path, data.encode('utf-8'))
 
     def delete(self, path):
         self.zkcli.delete(path)
