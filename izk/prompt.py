@@ -32,8 +32,8 @@ def main():
     args = parse_args()
 
     with ExtendedKazooClient(hosts=args.zk_url, timeout=2) as zkcli:
-        cmdrunner = ZkCommandRunner(zkcli)
         print_headers(zkcli)
+        cmdrunner = ZkCommandRunner(zkcli)
         while True:
             # We need a new completer for each command
             completer = ZkCompleter(zkcli)
