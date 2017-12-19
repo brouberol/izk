@@ -23,11 +23,17 @@ def parse_args():
     return parser.parse_args()
 
 
+def print_headers(zkcli):
+    print(zkcli.command(b'srvr'))
+
+
 def main():
     cmd_index = 0
     args = parse_args()
+
     with ExtendedKazooClient(hosts=args.zk_url, timeout=2) as zkcli:
         cmdrunner = ZkCommandRunner(zkcli)
+        print_headers(zkcli)
         while True:
             # We need a new completer for each command
             completer = ZkCompleter(zkcli)
