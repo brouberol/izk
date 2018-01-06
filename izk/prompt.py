@@ -6,10 +6,11 @@ from prompt_toolkit.history import InMemoryHistory
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from pygments.styles.monokai import MonokaiStyle
 
-from .runner import ZkCommandRunner
+from .runner import ZkCommandRunner, command_usage
 from .lexer import ZkCliLexer
 from .zk import ExtendedKazooClient
 from .completion import ZkCompleter
+from .validation import UnknownCommand, CommandValidationError
 
 
 history = InMemoryHistory()
@@ -47,7 +48,11 @@ def main():
                     style=MonokaiStyle)
                 try:
                     out = cmdrunner.run(cmd)
-                except Exception as exc:
+                except CommandValidationError as exc:
+                    # The command was invalid. Print command help and usage.
+                    print(exc, end='\n\n')
+                    print(command_usage(exc.command))
+                except (NoNodeError, UnknownCommand) as exc:
                     print(exc)
                 else:
                     if out is not None:
