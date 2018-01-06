@@ -1,5 +1,4 @@
 import argparse
-import traceback
 
 from prompt_toolkit.shortcuts import prompt
 from prompt_toolkit.history import InMemoryHistory
@@ -61,7 +60,7 @@ def main():
             except (KeyboardInterrupt, EOFError) as exc:
                 break
             except Exception:
-                traceback.print_exc()
+                raise
             finally:
                 cmd_index += 1
 
