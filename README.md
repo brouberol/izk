@@ -1,4 +1,4 @@
-# IZK: interactuve zookeeper
+# IZK: interactive zookeeper
 
 `izk` is a modern and simple zookeeper shell, with autoccompletion, history search, vi bindings, syntax highlighting and pretty-printing.
 
@@ -11,8 +11,6 @@ $ pip install izk
 ```
 
 ## Usage
-
-To enter the shell (and assuming you have local)
 
 ```shell
 $ izk --help
@@ -29,4 +27,4 @@ optional arguments:
 
 ## Demonstration
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/9Sp4R2prqHg" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+Have a look at this [demonstration](https://www.youtube.com/embed/9Sp4R2prqHg), showing off a few features of `izk`.
