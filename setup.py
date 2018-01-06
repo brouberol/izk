@@ -1,20 +1,22 @@
-# Always prefer setuptools over distutils
+import re
+
 from setuptools import setup, find_packages
-# To use a consistent encoding
 from codecs import open
 from os import path
 
 here = path.abspath(path.dirname(__file__))
 
-# with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
-#     long_description = f.read()
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
+with open(path.join(here, 'izk', '__init__.py')) as init:
+    version = re.match(r"__version__ = '(.+)'", init.readline()).group(1)
 
 setup(
     name='izk',
-    version='0.1.0',
+    version=version,
     description='Zookeeper CLI with autocomplete, syntax highlighting and pretty printing',
-    # long_description=long_description,
+    long_description=long_description,
     url='https://github.com/brouberol/izk',
     author='Balthazar Rouberol;',
     author_email='br@imap.cc',
@@ -35,7 +37,7 @@ setup(
         'pygments',
         'prompt_toolkit'
     ],
-    test_requires=[
+    tests_require=[
         'pytest',
     ],
     entry_points={
