@@ -25,6 +25,15 @@ KEYWORDS = [
     'setquota',
 ]
 
+# A zookeeper CLI command
+COMMAND = r'(%s)' % ('|'.join(KEYWORDS))
+
+# A znode path
+PATH = r'/[^\s]*'
+
+# A string-value, without the quotes
+STR = r"((?<=')[^']+(?=')|(?<=\")[^\"]+(?=\"))"
+
 
 class ZkCliLexer(RegexLexer):
 

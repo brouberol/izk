@@ -1,18 +1,10 @@
 import re
 import datetime
 
-from .lexer import KEYWORDS
 from kazoo.exceptions import NoNodeError
+
+from .lexer import COMMAND, PATH, STR, KEYWORDS
 from .formatting import colorize
-
-# A zookeeper CLI command
-COMMAND = r'(%s)' % ('|'.join(KEYWORDS))
-
-# A znode path
-PATH = r'/[^\s]*'
-
-# A string-value, without the quotes
-STR = r"((?<=')[^']+(?=')|(?<=\")[^\"]+(?=\"))"
 from .validation import validate_command_input
 
 # A CLI user-input token can either be a command, a path or a string
