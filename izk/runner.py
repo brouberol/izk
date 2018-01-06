@@ -2,6 +2,7 @@ import re
 import datetime
 
 from .lexer import KEYWORDS
+from kazoo.exceptions import NoNodeError
 from .formatting import colorize
 
 # A zookeeper CLI command
@@ -89,7 +90,10 @@ class ZkCommandRunner:
         Example: ls /test
 
         """
-        nodes = self.zkcli.get_children(path)
+        try:
+            nodes = self.zkcli.get_children(path)
+        except NoNodeError as exc:
+            raise NoNodeError('%s does not exist' % (path))
         return ' '.join(nodes)
 
     @colorize
@@ -102,7 +106,7 @@ class ZkCommandRunner:
         """
         node_data = self.zkcli.get_node(path)
         if node_data is None:
-            raise Exception('%s does not exist' % (path))
+            raise NoNodeError('%s does not exist' % (path))
         else:
             return node_data
 
