@@ -12,6 +12,7 @@ PATH = r'/[^\s]*'
 
 # A string-value, without the quotes
 STR = r"((?<=')[^']+(?=')|(?<=\")[^\"]+(?=\"))"
+from .validation import validate_command_input
 
 # A CLI user-input token can either be a command, a path or a string
 TOKEN = r'(%s)' % '|'.join([COMMAND, PATH, STR])
@@ -68,6 +69,7 @@ class ZkCommandRunner:
         ]
         return '\n'.join(lines)
 
+    @validate_command_input
     def run(self, command_str):
         if command_str:
             tokens = self._tokenize(command_str)
