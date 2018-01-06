@@ -1,11 +1,13 @@
 import json
 import collections
+import functools
 
 from pygments import highlight, lexers, formatters
 from pygments.styles.monokai import MonokaiStyle
 
 
 def colorize(f):
+    @functools.wraps(f)
     def wrapper(*args, **kwargs):
         """Pretty-print container types and syntax-highlight command results."""
         out = f(*args, **kwargs)
