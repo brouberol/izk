@@ -11,8 +11,8 @@ here = path.abspath(path.dirname(__file__))
 
 
 setup(
-    name='izk',  # Required
-    version='0.1.0',  # Required
+    name='izk',
+    version='0.1.0',
     description='Zookeeper CLI with autocomplete, syntax highlighting and pretty printing',
     # long_description=long_description,
     url='https://github.com/brouberol/izk',
@@ -29,13 +29,16 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     keywords='zookeeper cli interactive',
-    packages=find_packages(exclude=['contrib', 'docs', 'tests']),  # Required
+    packages=find_packages(exclude=['contrib', 'docs', 'tests']),
     install_requires=[
         'kazoo',
         'pygments',
         'prompt_toolkit'
-    ],  # Optional
-    entry_points={  # Optional
+    ],
+    test_requires=[
+        'pytest',
+    ],
+    entry_points={
         'console_scripts': [
             'izk=izk.prompt:main',
         ],
