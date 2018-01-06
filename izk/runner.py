@@ -60,6 +60,14 @@ class ZkCommandRunner:
         tokens = re.findall(TOKEN, command_str)
         return [tok[0] for tok in tokens]
 
+    def close(self):
+        """Close the shell"""
+        raise KeyboardInterrupt
+
+    def quit(self):
+        """Close the shell"""
+        raise KeyboardInterrupt
+
     def help(self, command_name=None):
         """Print the help of a command
 
@@ -98,6 +106,15 @@ class ZkCommandRunner:
         else:
             return node_data
 
+    def create(self, path):
+        """Recursively create a path if it doesn't exist
+
+        Usage: create <path>
+        Example: create /a/b/c/d
+
+        """
+        return self.zkcli.ensure_path(path)
+
     def set(self, path, data):
         """Set or update the content of a ZNode
 
@@ -118,6 +135,15 @@ class ZkCommandRunner:
 
         """
         self.zkcli.delete(path)
+
+    def rmr(self, path):
+        """Recursively delete all children ZNodes, along with argument node.
+
+        Usage: rmr <path>
+        Example: rmr /test
+
+        """
+        self.zkcli.delete(path, recursive=True)
 
     def stat(self, path):
         """Display a ZNode's metadata
