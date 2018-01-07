@@ -14,7 +14,7 @@ $ pip install izk
 
 ```shell
 $ izk --help
-usage: izk [-h]
+usage: izk [-h] [--write]
            [--style {default,emacs,...}]
            [zk_url]
 
