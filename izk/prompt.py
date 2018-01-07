@@ -16,11 +16,17 @@ from .validation import UnknownCommand, CommandValidationError
 history = InMemoryHistory()
 auto_suggest = AutoSuggestFromHistory()
 
+DEFAULT_ZK_URL = 'localhost:2181'
+
 
 def parse_args():
     parser = argparse.ArgumentParser(
         description='CLI for zookeeper with syntax-highlighting and auto-completion')
-    parser.add_argument('zk_url', help='URL of the zookeeper node')
+    parser.add_argument(
+        'zk_url',
+        nargs='?',
+        help='URL of the zookeeper node. Default: %s' % (DEFAULT_ZK_URL),
+        default=DEFAULT_ZK_URL)
     return parser.parse_args()
 
 
