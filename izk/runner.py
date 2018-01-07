@@ -1,7 +1,7 @@
 import re
 import datetime
 
-from kazoo.exceptions import NoNodeError
+from kazoo.exceptions import NoNodeError, NotEmptyError
 
 from .lexer import COMMAND, PATH, STR, KEYWORDS
 from .formatting import colorize
@@ -131,7 +131,13 @@ class ZkCommandRunner:
 
         """
         if ask_for_confirmation("You're about to delete %s. Proceed?" % (path)):
-            self.zkcli.delete(path)
+            try:
+                self.zkcli.delete(path)
+            except NotEmptyError:
+                msg = (
+                    'Cannot delete %s as it still contains nodes. '
+                    'Use the `rmr` command if you really want to proceed.') % (path)
+                raise NotEmptyError(msg)
 
     def rmr(self, path):
         """Recursively delete all children ZNodes, along with argument node.

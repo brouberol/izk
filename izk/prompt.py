@@ -4,7 +4,7 @@ from prompt_toolkit.shortcuts import prompt
 from prompt_toolkit.history import InMemoryHistory
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from pygments.styles.monokai import MonokaiStyle
-from kazoo.exceptions import NoNodeError
+from kazoo.exceptions import NoNodeError, NotEmptyError
 
 from .runner import ZkCommandRunner, command_usage
 from .lexer import ZkCliLexer
@@ -58,7 +58,7 @@ def main():
                     # The command was invalid. Print command help and usage.
                     print(exc, end='\n\n')
                     print(command_usage(exc.command))
-                except (NoNodeError, UnknownCommand) as exc:
+                except (NoNodeError, NotEmptyError, UnknownCommand) as exc:
                     print(exc)
                 else:
                     if out is not None:
