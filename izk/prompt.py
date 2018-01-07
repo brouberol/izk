@@ -1,9 +1,10 @@
 import argparse
+import threading
 
 from prompt_toolkit.shortcuts import prompt
 from prompt_toolkit.history import InMemoryHistory
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
-from pygments.styles.monokai import MonokaiStyle
+from pygments import styles
 from kazoo.exceptions import NoNodeError, NotEmptyError
 
 from .runner import ZkCommandRunner, command_usage
@@ -11,12 +12,15 @@ from .lexer import ZkCliLexer
 from .zk import ExtendedKazooClient
 from .completion import ZkCompleter
 from .validation import UnknownCommand, CommandValidationError, ask_for_confirmation
+from .formatting import STYLE_NAMES
 
 
 history = InMemoryHistory()
 auto_suggest = AutoSuggestFromHistory()
+g = threading.local()
 
 DEFAULT_ZK_URL = 'localhost:2181'
+DEFAULT_COLOR_STYLE = 'monokai'
 
 
 def parse_args():
@@ -27,6 +31,12 @@ def parse_args():
         nargs='?',
         help='URL of the zookeeper node. Default: %s' % (DEFAULT_ZK_URL),
         default=DEFAULT_ZK_URL)
+    parser.add_argument(
+        '--style',
+        help="The color style to adopt. Default: %s" % (DEFAULT_COLOR_STYLE),
+        default=DEFAULT_COLOR_STYLE,
+        choices=STYLE_NAMES,
+    )
     return parser.parse_args()
 
 
@@ -37,6 +47,7 @@ def print_headers(zkcli):
 def main():
     cmd_index = 0
     args = parse_args()
+    g.style = styles.get_style_by_name(args.style)
 
     with ExtendedKazooClient(hosts=args.zk_url, timeout=2) as zkcli:
         print_headers(zkcli)
@@ -51,7 +62,7 @@ def main():
                     auto_suggest=auto_suggest,
                     completer=completer,
                     lexer=ZkCliLexer,
-                    style=MonokaiStyle)
+                    style=g.style)
                 try:
                     out = cmdrunner.run(cmd)
                 except CommandValidationError as exc:
