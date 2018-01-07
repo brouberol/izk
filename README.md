@@ -14,15 +14,19 @@ $ pip install izk
 
 ```shell
 $ izk --help
-usage: izk [-h] zk_url
+usage: izk [-h]
+           [--style {default,emacs,...}]
+           [zk_url]
 
 CLI for zookeeper with syntax-highlighting and auto-completion
 
 positional arguments:
-  zk_url      URL of the zookeeper node
+  zk_url                URL of the zookeeper node. Default: localhost:2181
 
 optional arguments:
-  -h, --help  show this help message and exit
+  -h, --help            show this help message and exit
+  --style {default,emacs,...}
+                        The color style to adopt. Default: monokai
 ```
 
 ## Demonstration
