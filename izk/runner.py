@@ -83,7 +83,7 @@ class ZkCommandRunner:
         Usage: help [command]
         Examples:
         - help     # shows the list of commands
-        - help ls  # show a command help
+        - help ls  # shows a command help
 
         """
         if command_name:
