@@ -10,7 +10,7 @@ from .runner import ZkCommandRunner, command_usage
 from .lexer import ZkCliLexer
 from .zk import ExtendedKazooClient
 from .completion import ZkCompleter
-from .validation import UnknownCommand, CommandValidationError
+from .validation import UnknownCommand, CommandValidationError, ask_for_confirmation
 
 
 history = InMemoryHistory()
@@ -64,7 +64,8 @@ def main():
                     if out is not None:
                         print(out)
             except (KeyboardInterrupt, EOFError) as exc:
-                break
+                if ask_for_confirmation('Quit?'):
+                    break
             except Exception:
                 raise
             finally:
