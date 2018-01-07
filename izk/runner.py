@@ -158,6 +158,8 @@ class ZkCommandRunner:
                     'Cannot delete %s as it still contains nodes. '
                     'Use the `rmr` command if you really want to proceed.') % (path)
                 raise NotEmptyError(msg)
+            except NoNodeError:
+                raise NoNodeError('%s does not exist' % (path))
 
     @write_op
     def rmr(self, path):
