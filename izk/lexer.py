@@ -33,19 +33,20 @@ COMMAND = r'(%s)' % ('|'.join(KEYWORDS))
 # A znode path
 PATH = r'/[^\s]*'
 
-# A string-value, without the quotes
-STR = r"((?<=')[^']+(?=')|(?<=\")[^\"]+(?=\"))"
+# A string-value
+QUOTED_STR = r"('[^']*'|\"[^\"]*\")"
 
-# A single word
-FOUR_LETTER_WORD = r"[a-z]{4}"
+# A single 4 letter word
+FOUR_LETTER_WORD = r"\s+[a-z]{4}(\s+|$)"
 
 
 class ZkCliLexer(RegexLexer):
 
     tokens = {
         'root': [
-            (r'/[^\s]+', Text),
+            (PATH, Text),
             (FOUR_LETTER_WORD, Text),
+            (QUOTED_STR, String),
             (words(KEYWORDS, suffix=r'\b'), Keyword),
         ],
     }

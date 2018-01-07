@@ -4,10 +4,6 @@ import functools
 from .lexer import COMMAND, PATH, FOUR_LETTER_WORD, QUOTED_STR
 
 
-# A string-value, without the quotes
-STR = r"('[^']+'|\"[^\"]+\")"
-
-
 def ask_for_confirmation(message):
     message = '%s [y/n] ' % (message)
     while True:
@@ -59,7 +55,7 @@ class CommandValidator:
         'delete': PATH,
         'create': PATH,
         'rmr': PATH,
-        'set': [PATH, STR],
+        'set': [PATH, QUOTED_STR],
         'help': Either(None, COMMAND),
         'quit': None,
         'raw': FOUR_LETTER_WORD
@@ -71,11 +67,11 @@ class CommandValidator:
         self.patterns = self._make_patterns()
 
     def _parse_command_name(self):
-        command_pattern = r'^\s*(%s)\s*' % (COMMAND)
+        command_pattern = r'(%s)\s*' % (COMMAND)
         m = re.match(command_pattern, self.input_str)
         if not m:
             raise UnknownCommand('Command %r not found' % (self.input_str))
-        return m.group(1)
+        return m.group(1).strip()
 
     def _make_pattern(self, tokens):
         if tokens is None:
@@ -85,6 +81,12 @@ class CommandValidator:
 
         # the first token will be preceeded by the command
         tokens = [self.command] + tokens
+
+        # Each token pattern must be taken in isolation, without taking any preceeding
+        # \s into account
+        tokens = [
+            token.replace('\s+', '') if token.startswith('\s+') else token
+            for token in tokens]
         pattern = r'\s+'.join(tokens)
         return r'^\s*%s\s*$' % (pattern)
 

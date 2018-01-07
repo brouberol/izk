@@ -3,12 +3,12 @@ import datetime
 
 from kazoo.exceptions import NoNodeError, NotEmptyError
 
-from .lexer import COMMAND, PATH, STR, KEYWORDS, FOUR_LETTER_WORD
+from .lexer import COMMAND, PATH, QUOTED_STR, KEYWORDS, FOUR_LETTER_WORD
 from .formatting import colorize
 from .validation import validate_command_input, ask_for_confirmation
 
 # A CLI user-input token can either be a command, a path or a string
-TOKEN = r'(%s)' % '|'.join([COMMAND, PATH, STR, FOUR_LETTER_WORD])
+TOKEN = r'(%s)' % '|'.join([COMMAND, PATH, QUOTED_STR, FOUR_LETTER_WORD])
 
 
 def command_usage(command_name):
@@ -51,7 +51,7 @@ class ZkCommandRunner:
 
     def _tokenize(self, command_str):
         tokens = re.findall(TOKEN, command_str)
-        return [tok[0] for tok in tokens]
+        return [tok[0].strip() for tok in tokens]
 
     def close(self):
         """Close the shell"""
@@ -118,6 +118,7 @@ class ZkCommandRunner:
         Example: set /test '{"key": "value"}'
 
         """
+        data = data.strip("'").strip('"')
         if not self.zkcli.exists(path):
             return self.zkcli.create(path, data.encode('utf-8'))
         else:
@@ -189,6 +190,6 @@ class ZkCommandRunner:
     def run(self, command_str):
         if command_str:
             tokens = self._tokenize(command_str)
-            command, args = tokens[0], tokens[1:]
+            command, args = tokens[0].strip(), tokens[1:]
             out = getattr(self, command)(*args)
             return out
