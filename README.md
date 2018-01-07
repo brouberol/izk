@@ -10,6 +10,8 @@ To install `izk`, simply run
 $ pip install izk
 ```
 
+`izk` is Python 3 only. I do not plan to support Python 2, but it that's important to you, feel free to contribute!
+
 ## Usage
 
 ```shell
