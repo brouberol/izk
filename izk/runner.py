@@ -3,12 +3,12 @@ import datetime
 
 from kazoo.exceptions import NoNodeError, NotEmptyError
 
-from .lexer import COMMAND, PATH, STR, KEYWORDS
+from .lexer import COMMAND, PATH, STR, KEYWORDS, FOUR_LETTER_WORD
 from .formatting import colorize
 from .validation import validate_command_input, ask_for_confirmation
 
 # A CLI user-input token can either be a command, a path or a string
-TOKEN = r'(%s)' % '|'.join([COMMAND, PATH, STR])
+TOKEN = r'(%s)' % '|'.join([COMMAND, PATH, STR, FOUR_LETTER_WORD])
 
 
 def command_usage(command_name):
@@ -174,6 +174,16 @@ class ZkCommandRunner:
             'numChildren = {}'.format(stat.numChildren),
         ]
         return '\n'.join(lines)
+
+    def raw(self, _4lcmd):
+        """Send the 4-letter-word command to the zookeeper server
+
+        Usage: raw <4-letter-word>
+        Example: raw srvr
+
+        """
+        _4lcmd = _4lcmd.encode('utf-8')
+        return self.zkcli.command(_4lcmd)
 
     @validate_command_input
     def run(self, command_str):

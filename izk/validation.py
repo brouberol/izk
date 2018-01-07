@@ -1,7 +1,7 @@
 import re
 import functools
 
-from .lexer import COMMAND, PATH
+from .lexer import COMMAND, PATH, FOUR_LETTER_WORD, QUOTED_STR
 
 
 # A string-value, without the quotes
@@ -62,6 +62,7 @@ class CommandValidator:
         'set': [PATH, STR],
         'help': Either(None, COMMAND),
         'quit': None,
+        'raw': FOUR_LETTER_WORD
     }
 
     def __init__(self, input_str):
