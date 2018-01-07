@@ -25,6 +25,7 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
+  --write               Authorize write operations (update/insert/remove)
   --style {default,emacs,...}
                         The color style to adopt. Default: monokai
 ```

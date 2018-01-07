@@ -7,7 +7,7 @@ from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from pygments import styles
 from kazoo.exceptions import NoNodeError, NotEmptyError
 
-from .runner import ZkCommandRunner, command_usage
+from .runner import ZkCommandRunner, command_usage, UnauthorizedWrite
 from .lexer import ZkCliLexer
 from .zk import ExtendedKazooClient
 from .completion import ZkCompleter
@@ -32,6 +32,12 @@ def parse_args():
         help='URL of the zookeeper node. Default: %s' % (DEFAULT_ZK_URL),
         default=DEFAULT_ZK_URL)
     parser.add_argument(
+        '--write',
+        help='Authorize write operations (update/insert/remove)',
+        action='store_true',
+        default=False,
+    )
+    parser.add_argument(
         '--style',
         help="The color style to adopt. Default: %s" % (DEFAULT_COLOR_STYLE),
         default=DEFAULT_COLOR_STYLE,
@@ -49,7 +55,11 @@ def main():
     args = parse_args()
     g.style = styles.get_style_by_name(args.style)
 
-    with ExtendedKazooClient(hosts=args.zk_url, timeout=2) as zkcli:
+    with ExtendedKazooClient(
+        hosts=args.zk_url,
+        timeout=2,
+        read_only=not args.write
+    ) as zkcli:
         print_headers(zkcli)
         cmdrunner = ZkCommandRunner(zkcli)
         while True:
@@ -69,7 +79,9 @@ def main():
                     # The command was invalid. Print command help and usage.
                     print(exc, end='\n\n')
                     print(command_usage(exc.command))
-                except (NoNodeError, NotEmptyError, UnknownCommand) as exc:
+                except (
+                    NoNodeError, NotEmptyError, UnknownCommand, UnauthorizedWrite
+                ) as exc:
                     print(exc)
                 else:
                     if out is not None:

@@ -1,5 +1,6 @@
 import re
 import datetime
+import functools
 
 from kazoo.exceptions import NoNodeError, NotEmptyError
 
@@ -9,6 +10,10 @@ from .validation import validate_command_input, ask_for_confirmation
 
 # A CLI user-input token can either be a command, a path or a string
 TOKEN = r'(%s)' % '|'.join([COMMAND, PATH, QUOTED_STR, FOUR_LETTER_WORD])
+
+
+class UnauthorizedWrite(Exception):
+    """Exception raised when a write operation is triggered in RO mode."""
 
 
 def command_usage(command_name):
@@ -41,6 +46,17 @@ def commands_help():
         command_short_help = command_help(command_name, short=True)
         _help.append('- %s: %s' % (command_name, command_short_help))
     return '\n'.join(_help)
+
+
+def write_op(f):
+    """Raise an UnauthorizedWrite exception if the client is in read-only mode."""
+    @functools.wraps(f)
+    def wrapper(*args, **kwargs):
+        runner, *_ = args
+        if runner.zkcli.read_only:
+            raise UnauthorizedWrite('Un-authorized write operation in read-only mode')
+        return f(*args, **kwargs)
+    return wrapper
 
 
 class ZkCommandRunner:
@@ -102,6 +118,7 @@ class ZkCommandRunner:
         else:
             return node_data
 
+    @write_op
     def create(self, path):
         """Recursively create a path if it doesn't exist
 
@@ -111,6 +128,7 @@ class ZkCommandRunner:
         """
         return self.zkcli.ensure_path(path)
 
+    @write_op
     def set(self, path, data):
         """Set or update the content of a ZNode
 
@@ -124,6 +142,7 @@ class ZkCommandRunner:
         else:
             self.zkcli.set(path, data.encode('utf-8'))
 
+    @write_op
     def delete(self, path):
         """Delete a leaf ZNode
 
@@ -140,6 +159,7 @@ class ZkCommandRunner:
                     'Use the `rmr` command if you really want to proceed.') % (path)
                 raise NotEmptyError(msg)
 
+    @write_op
     def rmr(self, path):
         """Recursively delete all children ZNodes, along with argument node.
 
