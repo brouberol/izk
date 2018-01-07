@@ -8,6 +8,20 @@ from .lexer import COMMAND, PATH
 STR = r"('[^']+'|\"[^\"]+\")"
 
 
+def ask_for_confirmation(message):
+    message = '%s [y/n] ' % (message)
+    while True:
+        answer = input(message)
+        if not answer:
+            continue
+        answer = answer.lower()[0]
+        if answer == 'y':
+            return True
+        elif answer == 'n':
+            print('Aborting')
+            return False
+
+
 class Either:
     def __init__(self, *options):
         self.options = options

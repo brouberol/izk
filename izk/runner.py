@@ -5,7 +5,7 @@ from kazoo.exceptions import NoNodeError
 
 from .lexer import COMMAND, PATH, STR, KEYWORDS
 from .formatting import colorize
-from .validation import validate_command_input
+from .validation import validate_command_input, ask_for_confirmation
 
 # A CLI user-input token can either be a command, a path or a string
 TOKEN = r'(%s)' % '|'.join([COMMAND, PATH, STR])
@@ -130,7 +130,8 @@ class ZkCommandRunner:
         Example: delete /test/node
 
         """
-        self.zkcli.delete(path)
+        if ask_for_confirmation("You're about to delete %s. Proceed?" % (path)):
+            self.zkcli.delete(path)
 
     def rmr(self, path):
         """Recursively delete all children ZNodes, along with argument node.
@@ -139,7 +140,8 @@ class ZkCommandRunner:
         Example: rmr /test
 
         """
-        self.zkcli.delete(path, recursive=True)
+        if ask_for_confirmation("You're about to recursively delete %s. Proceed?" % (path)):
+            self.zkcli.delete(path, recursive=True)
 
     def stat(self, path):
         """Display a ZNode's metadata
