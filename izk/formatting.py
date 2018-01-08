@@ -1,5 +1,4 @@
 import json
-import collections
 import functools
 
 from pygments import highlight, lexers, formatters
@@ -24,7 +23,7 @@ def colorize(f):
         except ValueError:
             pass
         else:
-            if isinstance(serialized, collections.abc.Container):
+            if isinstance(serialized, (tuple, list, dict)):
                 printable = json.dumps(serialized, indent=2)
                 lexer = lexers.JsonLexer()
         printable = highlight(
