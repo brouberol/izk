@@ -15,6 +15,8 @@ def colorize(f):
         """Pretty-print container types and syntax-highlight command results."""
         from .prompt import g
         out = f(*args, **kwargs)
+        if out is None:
+            return
         printable = repr(out)
         lexer = lexers.PythonLexer()
         try:

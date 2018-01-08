@@ -112,11 +112,14 @@ class ZkCommandRunner:
         Example: get /test
 
         """
-        node_data = self.zkcli.get_node(path)
-        if node_data is None:
+        try:
+            node_data, _ = self.zkcli.get(path)
+        except NoNodeError:
             raise NoNodeError('%s does not exist' % (path))
         else:
-            return node_data
+            if node_data is not None:
+                node_data = node_data.decode('utf-8')
+                return node_data
 
     @write_op
     def create(self, path):
