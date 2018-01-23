@@ -2,10 +2,11 @@ import re
 import datetime
 import functools
 
+import colored
 from kazoo.exceptions import NoNodeError, NotEmptyError
 
 from .lexer import COMMAND, PATH, QUOTED_STR, KEYWORDS, FOUR_LETTER_WORD
-from .formatting import colorize, columnize
+from .formatting import colorize, columnize, PARENT_ZNODE_STYLE
 from .validation import validate_command_input, ask_for_confirmation
 
 # A CLI user-input token can either be a command, a path or a string
@@ -103,8 +104,15 @@ class ZkCommandRunner:
             nodes = self.zkcli.get_children(path)
         except NoNodeError as exc:
             raise NoNodeError('%s does not exist' % (path))
+
         nodes = sorted(nodes)
-        nodes = columnize(nodes, NODES_PER_LINE)
+        fmt_nodes = []
+        for node in nodes:
+            if self.zkcli.get_children('/'.join((path, node))):
+                node = colored.stylize(node, PARENT_ZNODE_STYLE)
+            fmt_nodes.append(node)
+
+        nodes = columnize(fmt_nodes, NODES_PER_LINE)
         return nodes
 
     @colorize

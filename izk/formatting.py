@@ -2,11 +2,13 @@ import json
 import functools
 import shutil
 
+import colored
 from pygments import highlight, lexers, formatters
 from pygments import styles
 
 
 STYLE_NAMES = list(styles.get_all_styles())
+PARENT_ZNODE_STYLE = angry = colored.fg("blue") + colored.attr("bold")
 
 
 def chunks(l, n):
