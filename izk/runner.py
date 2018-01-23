@@ -5,11 +5,12 @@ import functools
 from kazoo.exceptions import NoNodeError, NotEmptyError
 
 from .lexer import COMMAND, PATH, QUOTED_STR, KEYWORDS, FOUR_LETTER_WORD
-from .formatting import colorize
+from .formatting import colorize, columnize
 from .validation import validate_command_input, ask_for_confirmation
 
 # A CLI user-input token can either be a command, a path or a string
 TOKEN = r'(%s)' % '|'.join([COMMAND, PATH, QUOTED_STR, FOUR_LETTER_WORD])
+NODES_PER_LINE = 3
 
 
 class UnauthorizedWrite(Exception):
@@ -102,7 +103,9 @@ class ZkCommandRunner:
             nodes = self.zkcli.get_children(path)
         except NoNodeError as exc:
             raise NoNodeError('%s does not exist' % (path))
-        return ' '.join(nodes)
+        nodes = sorted(nodes)
+        nodes = columnize(nodes, NODES_PER_LINE)
+        return nodes
 
     @colorize
     def get(self, path):

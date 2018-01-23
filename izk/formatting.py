@@ -1,11 +1,30 @@
 import json
 import functools
+import shutil
 
 from pygments import highlight, lexers, formatters
 from pygments import styles
 
 
 STYLE_NAMES = list(styles.get_all_styles())
+
+
+def chunks(l, n):
+    """Yield successive n-sized chunks from l."""
+    for i in range(0, len(l), n):
+        yield l[i:i + n]
+
+
+def columnize(items, nb_columns):
+    """Format the argument items in columns, using the current terminal width"""
+    items_lines = chunks(items, nb_columns)
+    term_width, _ = shutil.get_terminal_size()
+    col_width = int(term_width / nb_columns)
+    lines = '\n'.join([
+        "".join(item.ljust(col_width) for item in item_line)
+        for item_line in items_lines
+    ])
+    return lines
 
 
 def colorize(f):
