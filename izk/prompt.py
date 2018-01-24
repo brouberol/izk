@@ -50,6 +50,11 @@ def print_headers(zkcli):
     print(zkcli.command(b'srvr'))
 
 
+def render_prompt(step, read_only):
+    mode = 'RO' if read_only else 'RW'
+    return '(%s %d) > ' % (mode, step)
+
+
 def main():
     cmd_index = 0
     args = parse_args()
@@ -67,7 +72,7 @@ def main():
             completer = ZkCompleter(zkcli)
             try:
                 cmd = prompt(
-                    '(%d) > ' % (cmd_index),
+                    render_prompt(cmd_index, zkcli.read_only),
                     history=history,
                     auto_suggest=auto_suggest,
                     completer=completer,

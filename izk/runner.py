@@ -212,6 +212,14 @@ class ZkCommandRunner:
         ]
         return '\n'.join(lines)
 
+    def toggle_write(self):
+        """Activate/deactivate read-only mode
+
+        Usage: toggle_write
+
+        """
+        self.zkcli.read_only = not self.zkcli.read_only
+
     def raw(self, _4lcmd):
         """Send the 4-letter-word command to the zookeeper server
 

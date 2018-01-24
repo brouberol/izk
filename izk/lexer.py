@@ -25,6 +25,7 @@ KEYWORDS = [
     # 'setquota',
     'stat',
     # 'sync',
+    'toggle_write'
 ]
 
 # A zookeeper CLI command

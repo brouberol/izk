@@ -58,7 +58,8 @@ class CommandValidator:
         'set': [PATH, QUOTED_STR],
         'help': Either(None, COMMAND),
         'quit': None,
-        'raw': FOUR_LETTER_WORD
+        'raw': FOUR_LETTER_WORD,
+        'toggle_write': None,
     }
 
     def __init__(self, input_str):
