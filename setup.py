@@ -35,7 +35,8 @@ setup(
     install_requires=[
         'kazoo',
         'pygments',
-        'prompt_toolkit'
+        'prompt_toolkit',
+        'colored'
     ],
     tests_require=[
         'pytest',
