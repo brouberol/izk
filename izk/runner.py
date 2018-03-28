@@ -1,6 +1,9 @@
 import re
 import datetime
 import functools
+import tempfile
+import subprocess
+import os
 
 import colored
 from kazoo.exceptions import NoNodeError, NotEmptyError
@@ -143,14 +146,23 @@ class ZkCommandRunner:
         return self.zkcli.ensure_path(path)
 
     @write_op
-    def set(self, path, data):
+    def set(self, path, data=None):
         """Set or update the content of a ZNode
 
-        Usage: set <path> <data>
+        Usage: set <path> [data]
         Example: set /test '{"key": "value"}'
+                 set /test
 
         """
-        data = data.strip("'").strip('"')
+        if data:
+            data = data.strip("'").strip('"')
+        else:
+            tmpfd, tmpf_path = tempfile.mkstemp()
+            os.close(tmpfd)
+            subprocess.call([os.environ.get('EDITOR', 'vim'), tmpf_path])
+            data = open(tmpf_path).read()
+            os.remove(tmpf_path)
+
         if not self.zkcli.exists(path):
             return self.zkcli.create(path, data.encode('utf-8'))
         else:
