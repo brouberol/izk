@@ -2,6 +2,8 @@
 
 `izk` is a modern and simple zookeeper shell, with autoccompletion, history search, vi bindings, syntax highlighting and pretty-printing.
 
+[![asciicast](https://asciinema.org/a/VTVM9q6t2vD39TvBB27LWioJY.png)](https://asciinema.org/a/VTVM9q6t2vD39TvBB27LWioJY)
+
 ## Installation
 
 To install `izk`, simply run
@@ -31,7 +33,3 @@ optional arguments:
   --style {default,emacs,...}
                         The color style to adopt. Default: monokai
 ```
-
-## Demonstration
-
-Have a look at this [demonstration](https://www.youtube.com/embed/9Sp4R2prqHg), showing off a few features of `izk`.
