@@ -77,7 +77,8 @@ def main():
                     auto_suggest=auto_suggest,
                     completer=completer,
                     lexer=ZkCliLexer,
-                    style=g.style)
+                    style=g.style,
+                    vi_mode=True)
                 try:
                     out = cmdrunner.run(cmd)
                 except CommandValidationError as exc:
