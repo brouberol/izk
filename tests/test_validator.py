@@ -22,12 +22,13 @@ from izk.validation import CommandValidator, UnknownCommand
     ('rmr /test/test2', True),
     ('rmr  bad/', False),
     ('set /test \'{"key": "value"}\'', True),
+    ('set /test', True),
+    ('set', False),
     ('help', True),
     ('help ls', True),
     ('help nope', False),
     ('quit', True),
     ('quit nope', False),
-
 ])
 def test_validate_pattern(input_str, expected):
     validator = CommandValidator(input_str)

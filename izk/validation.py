@@ -18,16 +18,29 @@ def ask_for_confirmation(message):
             return False
 
 
-class Either:
-    def __init__(self, *options):
-        self.options = options
+class Token(str):
+    """A token in a command string"""
 
-    def __iter__(self):
-        for option in self.options:
-            yield option
+    def __init__(self, string):
+        self.string = string
 
     def __repr__(self):
-        return '<%s %s>' % (self.__class__.__name__, self.options)
+        return '<%s %s>' % (self.__class__.__name__, self.string)
+
+    def __str__(self):
+        return self.string
+
+    def __add__(self, other):
+        if isinstance(other, Optional):
+            return '%s\s*%s' % (str(self), str(other))
+        return '%s\s+%s' % (str(self), str(other))
+
+
+class Optional(Token):
+    """A token that can be ommitted in a command"""
+
+    def __str__(self):
+        return r'%s?' % (self.string)
 
 
 class UnknownCommand(ValueError):
@@ -55,8 +68,8 @@ class CommandValidator:
         'delete': PATH,
         'create': PATH,
         'rmr': PATH,
-        'set': [PATH, QUOTED_STR],
-        'help': Either(None, COMMAND),
+        'set': [PATH, Optional(QUOTED_STR)],
+        'help': Optional(COMMAND),
         'quit': None,
         'raw': FOUR_LETTER_WORD,
         'toggle_write': None,
@@ -65,7 +78,7 @@ class CommandValidator:
     def __init__(self, input_str):
         self.input_str = input_str
         self.command = self._parse_command_name()
-        self.patterns = self._make_patterns()
+        self.pattern = self.make_pattern()
 
     def _parse_command_name(self):
         command_pattern = r'(%s)\s*' % (COMMAND)
@@ -75,37 +88,32 @@ class CommandValidator:
         return m.group(1).strip()
 
     def _make_pattern(self, tokens):
-        if tokens is None:
+        """Return a regex pattern given the input tokens"""
+
+        # First, transform the input in a list of Tokens, including the command
+        if tokens in (None, ''):
             tokens = []
-        elif isinstance(tokens, str):
-            tokens = [tokens] if tokens else []
+        elif isinstance(tokens, str) and not isinstance(tokens, Token):
+            tokens = [Token(tokens)]
+        elif isinstance(tokens, list):
+            tokens = [tok if isinstance(tok, Token) else Token(tok) for tok in tokens]
+        else:
+            tokens = [tokens]
 
         # the first token will be preceeded by the command
-        tokens = [self.command] + tokens
+        tokens = [Token(self.command)] + tokens
 
-        # Each token pattern must be taken in isolation, without taking any preceeding
-        # \s into account
-        tokens = [
-            token.replace('\s+', '') if token.startswith('\s+') else token
-            for token in tokens]
-        pattern = r'\s+'.join(tokens)
+        # Glue the tokens together, and rely on their __add__ method to perform the magic
+        pattern = functools.reduce(Token.__add__, tokens)
+
         return r'^\s*%s\s*$' % (pattern)
 
-    def _make_patterns(self):
-        patterns = []
+    def make_pattern(self):
         tokens = self.patterns[self.command]
-        if isinstance(tokens, Either):
-            for token in tokens:
-                patterns.append(self._make_pattern(token))
-        else:
-            patterns.append(self._make_pattern(tokens))
-        return patterns
+        return self._make_pattern(tokens)
 
     def validate(self):
-        for pattern in self.patterns:
-            if re.match(pattern, self.input_str):
-                return True
-        return False
+        return bool(re.match(self.pattern, self.input_str))
 
 
 def validate_command_input(f):
