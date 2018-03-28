@@ -7,6 +7,7 @@ KEYWORDS = [
     # 'connect',
     'create',
     'delete',
+    'edit',
     # 'delquota',
     'get',
     # 'getAcl',
