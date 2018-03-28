@@ -118,14 +118,7 @@ class ZkCommandRunner:
         nodes = columnize(fmt_nodes, NODES_PER_LINE)
         return nodes
 
-    @colorize
-    def get(self, path):
-        """Display the content of a ZNode
-
-        Usage: get <path>
-        Example: get /test
-
-        """
+    def _get(self, path):
         try:
             node_data, _ = self.zkcli.get(path)
         except NoNodeError:
@@ -134,6 +127,16 @@ class ZkCommandRunner:
             if node_data is not None:
                 node_data = node_data.decode('utf-8')
                 return node_data
+
+    @colorize
+    def get(self, path):
+        """Display the content of a ZNode
+
+        Usage: get <path>
+        Example: get /test
+
+        """
+        return self._get(path)
 
     @write_op
     def create(self, path):
@@ -167,6 +170,23 @@ class ZkCommandRunner:
             return self.zkcli.create(path, data.encode('utf-8'))
         else:
             self.zkcli.set(path, data.encode('utf-8'))
+
+    @write_op
+    def edit(self, path):
+        """Edit the content of a ZNode
+
+        Usage: edit <path>
+        Example: edit /test
+
+        """
+        data = self._get(path)
+
+        with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', delete=False) as f:
+            f.write(data)
+        subprocess.call([os.environ.get('EDITOR', 'vim'), f.name])
+        data = open(f.name).read()
+        os.remove(f.name)
+        self.zkcli.set(path, data.encode('utf-8'))
 
     @write_op
     def delete(self, path):

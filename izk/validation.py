@@ -62,16 +62,17 @@ class CommandValidator:
     """Object in charge of validating the user input for a given command."""
 
     patterns = {
-        'ls': PATH,
-        'get': PATH,
-        'stat': PATH,
-        'delete': PATH,
         'create': PATH,
-        'rmr': PATH,
-        'set': [PATH, Optional(QUOTED_STR)],
+        'delete': PATH,
+        'edit': PATH,
+        'get': PATH,
         'help': Optional(COMMAND),
+        'ls': PATH,
         'quit': None,
         'raw': FOUR_LETTER_WORD,
+        'rmr': PATH,
+        'set': [PATH, Optional(QUOTED_STR)],
+        'stat': PATH,
         'toggle_write': None,
     }
 
