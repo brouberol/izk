@@ -7,7 +7,7 @@ from izk.validation import CommandValidator, UnknownCommand
     ('delete  bad', False),
     ('delete /test', True),
     ('edit', False),
-    ('edit /test', True)
+    ('edit /test', True),
     ('get  bad ', False),
     ('get  bad/ ', False),
     ('get /test', True),
