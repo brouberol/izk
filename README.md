@@ -2,8 +2,7 @@
 
 `izk` is a modern and simple zookeeper shell, with autoccompletion, history search, vi bindings, syntax highlighting and pretty-printing.
 
-[![asciicast](https://asciinema.org/a/VTVM9q6t2vD39TvBB27LWioJY.png)](https://asciinema.org/a/VTVM9q6t2vD39TvBB27LWioJY?t=03)
-
+[![asciicast](https://asciinema.org/a/Cw1yNF3lu9Qkgqtg4n9jzvj54.png)](https://asciinema.org/a/Cw1yNF3lu9Qkgqtg4n9jzvj54?t=02)
 ## Installation
 
 To install `izk`, simply run
