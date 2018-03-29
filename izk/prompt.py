@@ -93,7 +93,7 @@ def main():
                     if out is not None:
                         print(out)
             except (KeyboardInterrupt, EOFError) as exc:
-                if ask_for_confirmation('Quit?'):
+                if ask_for_confirmation('Quit?', confirm_on_exc=True):
                     break
             except Exception:
                 raise

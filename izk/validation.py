@@ -4,18 +4,21 @@ import functools
 from .lexer import COMMAND, PATH, FOUR_LETTER_WORD, QUOTED_STR
 
 
-def ask_for_confirmation(message):
-    message = '%s [y/n] ' % (message)
-    while True:
-        answer = input(message)
-        if not answer:
-            continue
-        answer = answer.lower()[0]
-        if answer == 'y':
-            return True
-        elif answer == 'n':
-            print('Aborting')
-            return False
+def ask_for_confirmation(message, confirm_on_exc=False):
+    try:
+        message = '%s [y/n] ' % (message)
+        while True:
+            answer = input(message)
+            if not answer:
+                continue
+            answer = answer.lower()[0]
+            if answer == 'y':
+                return True
+            elif answer == 'n':
+                print('Aborting')
+                return False
+    except (KeyboardInterrupt, EOFError):
+        return confirm_on_exc
 
 
 class Token(str):
