@@ -13,6 +13,7 @@ from .zk import ExtendedKazooClient
 from .completion import ZkCompleter
 from .validation import UnknownCommand, CommandValidationError, ask_for_confirmation
 from .formatting import STYLE_NAMES
+from . import __version__
 
 
 history = InMemoryHistory()
@@ -25,7 +26,8 @@ DEFAULT_COLOR_STYLE = 'monokai'
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description='CLI for zookeeper with syntax-highlighting and auto-completion')
+        description="CLI for zookeeper with syntax-highlighting and auto-completion.",
+        epilog="Version: %s" % (__version__))
     parser.add_argument(
         'zk_url',
         nargs='?',
@@ -35,14 +37,17 @@ def parse_args():
         '--write',
         help='Authorize write operations (update/insert/remove)',
         action='store_true',
-        default=False,
-    )
+        default=False)
     parser.add_argument(
         '--style',
         help="The color style to adopt. Default: %s" % (DEFAULT_COLOR_STYLE),
         default=DEFAULT_COLOR_STYLE,
-        choices=STYLE_NAMES,
-    )
+        choices=STYLE_NAMES)
+    parser.add_argument(
+        '--version',
+        help="Display izk version number and exit",
+        action='version',
+        version=__version__)
     return parser.parse_args()
 
 
