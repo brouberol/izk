@@ -39,7 +39,7 @@ PATH = r'/[^\s]*'
 QUOTED_STR = r"('[^']*'|\"[^\"]*\")"
 
 # A single 4 letter word
-FOUR_LETTER_WORD = r"\s+[a-z]{4}(\s+|$)"
+FOUR_LETTER_WORD = r'\w{4}'
 
 
 class ZkCliLexer(RegexLexer):

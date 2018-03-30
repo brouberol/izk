@@ -126,7 +126,7 @@ def validate_command_input(f):
     @functools.wraps(f)
     def wrapper(runner, input_str):
         if input_str.strip():
-            validator = CommandValidator(input_str)
+            validator = CommandValidator(input_str.strip())
             if not validator.validate():
                 validation_error_msg = 'Command %r is invalid' % (input_str)
                 raise CommandValidationError(validator.command, validation_error_msg)

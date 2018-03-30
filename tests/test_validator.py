@@ -23,6 +23,8 @@ from izk.validation import CommandValidator, UnknownCommand
     ('ls /test', True),
     ('quit nope', False),
     ('quit', True),
+    ('raw', False),
+    ('raw srvr', True),
     ('rmr  bad/', False),
     ('rmr /test', True),
     ('rmr /test/test2', True),
