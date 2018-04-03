@@ -74,7 +74,7 @@ class ZkCommandRunner:
         tokens = re.findall(TOKEN, command_str)
         return [tok[0].strip() for tok in tokens]
 
-    def close(self):
+    def exit(self):
         """Close the shell"""
         raise KeyboardInterrupt
 

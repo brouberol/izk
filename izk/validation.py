@@ -68,6 +68,7 @@ class CommandValidator:
         'create': PATH,
         'delete': PATH,
         'edit': PATH,
+        'exit': None,
         'get': PATH,
         'help': Optional(COMMAND),
         'ls': PATH,
