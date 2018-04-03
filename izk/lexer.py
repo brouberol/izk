@@ -8,6 +8,7 @@ KEYWORDS = [
     'create',
     'delete',
     'edit',
+    'exit',
     # 'delquota',
     'get',
     # 'getAcl',
