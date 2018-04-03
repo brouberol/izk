@@ -1,6 +1,6 @@
 # IZK: interactive zookeeper
 
-[![Build Status](https://travis-ci.org/brouberol/izk.svg?branch=master)](https://travis-ci.org/brouberol/izk)
+[![Build Status](https://travis-ci.org/brouberol/izk.svg?branch=master)](https://travis-ci.org/brouberol/izk) [![Coverage Status](https://coveralls.io/repos/github/brouberol/izk/badge.svg?branch=brouberol%2Fcoverage)](https://coveralls.io/github/brouberol/izk?branch=brouberol%2Fcoverage)
 
 `izk` is a modern and simple zookeeper shell, with autoccompletion, history search, vi bindings, syntax highlighting and pretty-printing.
 
