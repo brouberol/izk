@@ -38,9 +38,6 @@ setup(
         'prompt_toolkit',
         'colored'
     ],
-    tests_require=[
-        'pytest',
-    ],
     entry_points={
         'console_scripts': [
             'izk=izk.prompt:main',
