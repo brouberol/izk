@@ -21,6 +21,14 @@ def rw_zk_runner():
     return izk.runner.ZkCommandRunner(zkcli)
 
 
+def test_command_usage():
+    expected = """Usage: help [command]
+Examples:
+- help     # shows the list of commands
+- help ls  # shows a command help"""
+    assert izk.runner.command_usage('help') == expected
+
+
 def test_run_invalid_command(zk_runner):
     with pytest.raises(CommandValidationError):
         zk_runner.run('ls')
