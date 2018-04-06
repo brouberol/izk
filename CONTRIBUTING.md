@@ -25,7 +25,7 @@ $ pip install -r requirements-dev.txt
 To run the test suite locally when using `pipenv`
 
 ```shell
-$ pipenv run pytest
+$ pipenv run py.test
 ```
 
 Otherwise, just run
