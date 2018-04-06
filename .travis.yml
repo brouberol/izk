@@ -7,7 +7,7 @@ python:
 install:
   - pip install pipenv
   - pipenv install --dev
-  - pipenv install tox-travis coveralls
+  - pipenv install coveralls
 script:
   - pipenv run pytest
 after_success:
