@@ -37,5 +37,3 @@ $ py.test
 ## Send the patch
 
 Create a local branch on which you can commit your changes, push it to your fork, and open a pull-request on the main repo. If Travis reports broken tests, please fix them, otherwise the pull request will not be merged.
-
-Feel free to add yourself to `CONTRIBUTORS.md` , and thanks again for contributing!
