@@ -19,7 +19,7 @@ $ pip install izk
 
 ## Usage
 
-```shell
+```
 $ izk --help
 usage: izk [-h] [--write]
            [--style {default,emacs,...}]
