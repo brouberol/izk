@@ -19,3 +19,10 @@ notifications:
     on_success: change
     on_failure: always
     on_pull_requests: true
+deploy:
+  provider: pypi
+  user: brouberol
+  password:
+    secure: Svi83cuclzCGEheRKFtG//6GP4RHosFtjEBAwED/EFy7eU7YlJhjlNDfjzXlYWBup5HmZCOalSIIjLBVEbK2HDD3dqrVA9bp8LMv2xGPc5Lp5h02uNpYfqdyf3Ut6AzM5iKy0Sj7DfRdd3Dqyl2S4akcH9CvkeNWFyBYuCp4jD8HMqRvn87k1iI9d8ceJojikoLd2NHNnBHQvhLj7+o7589qW3+UcjfoIOGPz4181BO0rCoJkstxD8aH8U8zEKLTgpp1/lvHweJ7SbBpchWzAebetfLEFXz/UiVDT4CUrwQFC4W1f43zYjtaivlDfApxq0TACwzLpmO9zj/ig0Zuv+uNTBhA+sgYktiyrkbC3pE+cL1MIYMb21sL5q+ZZhTblzFmD9nnONyYmGx40XKHGZTzXt6UqoB5lM/Yszxh9kUBYPjlviQsEYm7CP3xI7cdhJ1/JsoSDYhyXk2N1ZwQlNKoITzb+M8scvX+Pah3LXdSysQRnPOr+JlgkCmQFDs8YDB4pDBYnASRJWHfDZYYevya6M2WnBPMBCFw4FX4Ilnk2RrIZVMivWmLY04WhZS9NDnI+nr0Nc+G2DDVAzxfqoj/cVDOOpu8re/a+erbTXh34k0Iie9IuxxfdHwH5uJA/YdKIK/pPyP91/H2ObZ7trFx9lvqq/BwjSXXbBx/zXc=
+  on:
+    tags: true
