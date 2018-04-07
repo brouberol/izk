@@ -14,7 +14,7 @@ def mock_colorize_func(f):
 
 @pytest.fixture(autouse=True)
 def mock_colorize(monkeypatch):
-    """Deadtivate the colorize decorator by replacing it with a dummy.
+    """Deactivate the colorize decorator by replacing it with a dummy.
 
     We need to relaod the izk.runner module, as decorators are applied
     at import time, and mocking would have no effect without a reload.
