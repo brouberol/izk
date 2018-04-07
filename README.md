@@ -55,6 +55,9 @@ optional arguments:
   --style {default,emacs, ...}
                         The color style to adopt. Default: monokai. Override
                         via the IZK_STYLE environment variable.
+  --input-mode {vi,emacs}
+                        The input mode to adopt. Default: vi. Override via the
+                        IZK_INPUT_MODE environment variable.
   --version             Display izk version number and exit
 
 Version: 0.3.1

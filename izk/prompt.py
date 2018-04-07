@@ -24,6 +24,7 @@ g = threading.local()
 
 DEFAULT_ZK_URL = 'localhost:2181'
 DEFAULT_COLOR_STYLE = 'monokai'
+DEFAULT_INPUT_MODE = 'vi'
 
 
 class EnvDefault(argparse.Action):
@@ -85,6 +86,12 @@ def parse_args():
         default=DEFAULT_COLOR_STYLE,
         choices=STYLE_NAMES)
     parser.add_argument(
+        '--input-mode',
+        help="The input mode to adopt. Default: %s" % (DEFAULT_INPUT_MODE),
+        action=EnvDefault,
+        default=DEFAULT_INPUT_MODE,
+        choices=('vi', 'emacs'))
+    parser.add_argument(
         '--version',
         help="Display izk version number and exit",
         action='version',
@@ -124,7 +131,7 @@ def main():  # pragma: no cover
                     completer=completer,
                     lexer=ZkCliLexer,
                     style=g.style,
-                    vi_mode=True)
+                    vi_mode=args.mode == 'vi')
                 try:
                     out = cmdrunner.run(cmd)
                 except CommandValidationError as exc:
