@@ -46,15 +46,15 @@ CLI for zookeeper with syntax-highlighting and auto-completion.
 
 positional arguments:
   zk_url                URL of the zookeeper node. Default: localhost:2181.
-                        Override via IZK_ZK_URL environment variable.
+                        Override via the IZK_ZK_URL environment variable.
 
 optional arguments:
   -h, --help            show this help message and exit
   --write WRITE         Authorize write operations (update/insert/remove).
-                        Override via IZK_WRITE environment variable.
+                        Override via the IZK_WRITE environment variable.
   --style {default,emacs, ...}
                         The color style to adopt. Default: monokai. Override
-                        via IZK_STYLE environment variable.
+                        via the IZK_STYLE environment variable.
   --version             Display izk version number and exit
 
 Version: 0.3.1

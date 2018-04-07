@@ -51,7 +51,7 @@ class EnvDefault(argparse.Action):
             required = False
 
         # Update the help string with the override environment variable info
-        additional_help = 'Override via %s environment variable.' % (envvar)
+        additional_help = 'Override via the %s environment variable.' % (envvar)
         if 'help' in kwargs:
             kwargs['help'] = '%s. %s' % (kwargs['help'].rstrip('.'), additional_help)
         else:
@@ -101,7 +101,7 @@ def render_prompt(step, read_only):
     return '(%s %d) > ' % (mode, step)
 
 
-def main():
+def main():  # pragma: no cover
     cmd_index = 0
     args = parse_args()
     g.style = styles.get_style_by_name(args.style)
