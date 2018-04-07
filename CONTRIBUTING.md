@@ -9,10 +9,10 @@ If you have `pipenv` installed, you can let it install the dependencies:
 
 ```shell
 $ cd path/to/izk
-$ pipenv install --dev
+$ pipenv install --dev --three
 ```
 
-If you don't use `pipenv`, you can simply use `pip`:
+If you don't use `pipenv`, you can simply use `pip` (bear in mind that you need python3 for local development)
 
 ```shell
 $ cd path/to/izk
