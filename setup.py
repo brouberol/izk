@@ -15,7 +15,8 @@ with open(path.join(here, 'izk', '__init__.py')) as init:
 setup(
     name='izk',
     version=version,
-    description='Zookeeper CLI with autocomplete, syntax highlighting and pretty printing',
+    description=(
+        'Zookeeper CLI with autocompletion, syntax highlighting and pretty printing'),
     long_description=long_description,
     url='https://github.com/brouberol/izk',
     author='Balthazar Rouberol;',

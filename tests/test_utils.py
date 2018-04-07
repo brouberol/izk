@@ -4,7 +4,7 @@ from izk.utils import bool_from_str
 
 
 @pytest.mark.parametrize('s, expected', [
-    ('1', True),
+    ('1', False),
     ('yes', True),
     ('YES', True),
     ('true', True),
