@@ -17,22 +17,45 @@ $ pip install izk
 
 `izk` is Python 3 only. I do not plan to support Python 2, but it that's important to you, feel free to contribute!
 
+## Docker
+
+`izk` is also available as a docker image. To run it, execute
+
+```shell
+$ docker run -it brouberol/izk
+```
+
+Note that to ease usage woith docker, all command-line arguments can be passed as environment variables, prefixed with `IZK_`.
+
+Example: here is how to run `izk --write` in docker
+
+```shell
+$ docker run -it -e IZK_WRITE=1 brouberol/izk
+```
+
 ## Usage
 
 ```
 $ izk --help
-usage: izk [-h] [--write]
-           [--style {default,emacs,...}]
+usage: izk [-h] [--write WRITE]
+           [--style {default,emacs, ...}]
+           [--version]
            [zk_url]
 
-CLI for zookeeper with syntax-highlighting and auto-completion
+CLI for zookeeper with syntax-highlighting and auto-completion.
 
 positional arguments:
-  zk_url                URL of the zookeeper node. Default: localhost:2181
+  zk_url                URL of the zookeeper node. Default: localhost:2181.
+                        Override via IZK_ZK_URL environment variable.
 
 optional arguments:
   -h, --help            show this help message and exit
-  --write               Authorize write operations (update/insert/remove)
-  --style {default,emacs,...}
-                        The color style to adopt. Default: monokai
+  --write WRITE         Authorize write operations (update/insert/remove).
+                        Override via IZK_WRITE environment variable.
+  --style {default,emacs, ...}
+                        The color style to adopt. Default: monokai. Override
+                        via IZK_STYLE environment variable.
+  --version             Display izk version number and exit
+
+Version: 0.3.1
 ```
