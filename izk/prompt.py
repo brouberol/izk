@@ -131,7 +131,7 @@ def main():  # pragma: no cover
                     completer=completer,
                     lexer=ZkCliLexer,
                     style=g.style,
-                    vi_mode=args.mode == 'vi')
+                    vi_mode=args.input_mode == 'vi')
                 try:
                     out = cmdrunner.run(cmd)
                 except CommandValidationError as exc:
