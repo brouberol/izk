@@ -17,6 +17,7 @@ setup(
     version=version,
     description='Zookeeper CLI with autocomplete, syntax highlighting and pretty printing',
     long_description=long_description,
+    long_description_content_type='text/markdown',
     url='https://github.com/brouberol/izk',
     author='Balthazar Rouberol;',
     author_email='br@imap.cc',
