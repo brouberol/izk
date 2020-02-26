@@ -5,10 +5,11 @@ name = "pypi"
 
 [packages]
 "e1839a8" = {path = ".", editable = true}
+kazoo = "*"
 
 [dev-packages]
-coverage = "==4.5.1"
-py = "==1.5.2"
-pytest = "==3.3.2"
-pytest-cov = "==2.5.1"
+coverage = "*"
+py = "*"
+pytest = "*"
+pytest-cov = "*"
 "pytest-flake8" = "*"
