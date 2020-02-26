@@ -1,14 +1,15 @@
 language: python
 python:
-  - "3.4"
-  - "3.5"
   - "3.6"
+  - "3.7"
+  - "3.8"
 install:
+  - pip install -U pip
   - pip install pipenv
   - pipenv install --dev
   - pipenv install coveralls
 script:
-  - pipenv run pytest
+  - pipenv run pytest tests
 after_success:
   - coveralls
 notifications:
