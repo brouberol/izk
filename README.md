@@ -37,7 +37,7 @@ $ docker run -it -e IZK_WRITE=1 brouberol/izk
 
 ```
 $ izk --help
-usage: izk [-h] [--write WRITE]
+usage: izk [-h] [--eval [EVAL]] [--write WRITE]
            [--style {default,emacs, ...}]
            [--version]
            [zk_url]
@@ -50,6 +50,7 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
+  --eval [EVAL]         Evaluate a single zk command and exit
   --write WRITE         Authorize write operations (update/insert/remove).
                         Override via the IZK_WRITE environment variable.
   --style {default,emacs, ...}
@@ -60,5 +61,5 @@ optional arguments:
                         IZK_INPUT_MODE environment variable.
   --version             Display izk version number and exit
 
-Version: 0.4.0
+Version: 0.4.2
 ```

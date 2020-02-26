@@ -7,7 +7,7 @@ from pygments import highlight, lexers, formatters
 from pygments import styles
 
 
-STYLE_NAMES = list(styles.get_all_styles())
+STYLE_NAMES = list(styles.get_all_styles()) + ['none']
 PARENT_ZNODE_STYLE = angry = colored.fg("blue") + colored.attr("bold")
 
 
@@ -37,6 +37,8 @@ def colorize(f):
         out = f(*args, **kwargs)
         if out is None:
             return
+        if g.style is None:
+            return out
         printable = repr(out)
         lexer = lexers.PythonLexer()
         try:

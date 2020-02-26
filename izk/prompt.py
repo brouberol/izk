@@ -84,6 +84,11 @@ def parse_args():
         help='URL of the zookeeper node. Default: %s' % (DEFAULT_ZK_URL),
         default=DEFAULT_ZK_URL)
     parser.add_argument(
+        '--eval',
+        nargs='?',
+        type=str,
+        help='Evaluate a single zk command and exit')
+    parser.add_argument(
         '--write',
         help='Authorize write operations (update/insert/remove)',
         action=EnvDefault,
@@ -118,18 +123,39 @@ def render_prompt(step, read_only):
     return '(%s %d) > ' % (mode, step)
 
 
+def run_cmd(runner, cmd):
+    try:
+        out = runner.run(cmd)
+    except CommandValidationError as exc:
+        # The command was invalid. Print command help and usage.
+        print(exc, end='\n\n')
+        print(command_usage(exc.command))
+    except (
+        NoNodeError, NotEmptyError, UnknownCommand, UnauthorizedWrite
+    ) as exc:
+        print(exc)
+    else:
+        if out is not None:
+            print(out)
+
+
+
 def main():  # pragma: no cover
     cmd_index = 0
     args = parse_args()
-    g.style = styles.get_style_by_name(args.style)
+    g.style = None if args.style == 'none' else styles.get_style_by_name(args.style)
 
     with ExtendedKazooClient(
         hosts=args.zk_url,
         timeout=2,
         read_only=not args.write
     ) as zkcli:
-        print_headers(zkcli)
         cmdrunner = ZkCommandRunner(zkcli)
+        if args.eval:
+            run_cmd(cmdrunner, args.eval)
+            return
+
+        print_headers(zkcli)
         while True:
             # We need a new completer for each command
             completer = ZkCompleter(zkcli)
@@ -142,19 +168,7 @@ def main():  # pragma: no cover
                     lexer=PygmentsLexer(ZkCliLexer),
                     style=style_from_pygments_cls(g.style),
                     vi_mode=args.input_mode == 'vi')
-                try:
-                    out = cmdrunner.run(cmd)
-                except CommandValidationError as exc:
-                    # The command was invalid. Print command help and usage.
-                    print(exc, end='\n\n')
-                    print(command_usage(exc.command))
-                except (
-                    NoNodeError, NotEmptyError, UnknownCommand, UnauthorizedWrite
-                ) as exc:
-                    print(exc)
-                else:
-                    if out is not None:
-                        print(out)
+                run_cmd(cmdrunner, cmd)
             except (KeyboardInterrupt, EOFError) as exc:
                 if ask_for_confirmation('Quit?', confirm_on_exc=True):
                     break
