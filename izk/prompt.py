@@ -5,6 +5,16 @@ import os
 from prompt_toolkit.shortcuts import prompt
 from prompt_toolkit.history import InMemoryHistory
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
+try:
+    from prompt_toolkit.lexers import PygmentsLexer
+except ImportError:
+    def PygmentsLexer(lexer):
+        return lexer
+try:
+    from prompt_toolkit.styles.pygments import style_from_pygments_cls
+except ImportError:
+    def style_from_pygments_cls(style):
+        return style
 from pygments import styles
 from kazoo.exceptions import NoNodeError, NotEmptyError
 
@@ -155,8 +165,8 @@ def main():  # pragma: no cover
                     history=history,
                     auto_suggest=auto_suggest,
                     completer=completer,
-                    lexer=ZkCliLexer,
-                    style=g.style,
+                    lexer=PygmentsLexer(ZkCliLexer),
+                    style=style_from_pygments_cls(g.style),
                     vi_mode=args.input_mode == 'vi')
                 run_cmd(cmdrunner, cmd)
             except (KeyboardInterrupt, EOFError) as exc:
