@@ -125,7 +125,10 @@ class ZkCommandRunner:
             raise NoNodeError('%s does not exist' % (path))
         else:
             if node_data is not None:
-                node_data = node_data.decode('utf-8')
+                try:
+                    node_data = node_data.decode('utf-8')
+                except UnicodeDecodeError:
+                    pass
                 return node_data
 
     @colorize
