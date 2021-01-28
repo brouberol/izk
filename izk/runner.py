@@ -118,6 +118,41 @@ class ZkCommandRunner:
         nodes = columnize(fmt_nodes, NODES_PER_LINE)
         return nodes
 
+    def _tree(self, path, level, full):
+        padding = '│   ' * (level - 1) + '├── ' if level else ''
+        print_path = path if full else (path.rsplit('/')[-1] or '/')
+
+        try:
+            nodes = self.zkcli.get_children(path)
+
+            if nodes:
+                print_path = colored.stylize(print_path, PARENT_ZNODE_STYLE)
+            print(padding + print_path)
+
+            for node in nodes:
+                node = path + node if path == '/' else path + '/' + node
+                self._tree(node, level+1, full)
+        except NoNodeError as exc:
+            raise NoNodeError('%s does not exist' % (path))
+
+    def tree(self, path):
+        """Display a tree of a ZNode recursively
+
+        Usage: tree <path>
+        Example: tree /test
+
+        """
+        self._tree(path, 0, False)
+
+    def ftree(self, path):
+        """Display a tree of a ZNode recursively with full path
+
+        Usage: ftree <path>
+        Example: ftree /test
+
+        """
+        self._tree(path, 0, True)
+
     def _get(self, path):
         try:
             node_data, _ = self.zkcli.get(path)

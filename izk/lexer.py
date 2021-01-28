@@ -17,6 +17,8 @@ KEYWORDS = [
     # 'listquota',
     'ls',
     # 'ls2',
+    'tree',
+    'ftree',
     # 'printwatches',
     'quit',
     # 'redo',

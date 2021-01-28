@@ -72,6 +72,8 @@ class CommandValidator:
         'get': PATH,
         'help': Optional(COMMAND),
         'ls': PATH,
+        'tree': PATH,
+        'ftree': PATH,
         'quit': None,
         'raw': ZK_FOUR_LETTER_WORD,
         'rmr': PATH,
