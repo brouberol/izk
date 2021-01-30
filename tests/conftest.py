@@ -1,5 +1,5 @@
 import pytest
-import imp
+import importlib
 import functools
 
 import izk.runner
@@ -21,4 +21,4 @@ def mock_colorize(monkeypatch):
 
     """
     monkeypatch.setattr("izk.formatting.colorize", mock_colorize_func)
-    imp.reload(izk.runner)
+    importlib.reload(izk.runner)
