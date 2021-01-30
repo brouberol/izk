@@ -59,6 +59,8 @@ def test_help_general(zk_runner):
 - get: Display the content of a ZNode
 - help: Print the help of a command
 - ls: Display the children of a ZNode
+- tree: Display a tree of a ZNode recursively
+- ftree: Display a tree of a ZNode recursively with full path
 - quit: Close the shell
 - raw: Send the 4-letter-word command to the zookeeper server
 - rmr: Recursively delete all children ZNodes, along with argument node.
