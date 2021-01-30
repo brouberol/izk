@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "izk"
+version = "0.4.3"
+description = "Zookeeper CLI with autocomplete, syntax highlighting and pretty printing"
+authors = ["Balthazar Rouberol <br@imap.cc>"]
+license = "Apache Software License"
+
+[tool.poetry.dependencies]
+python = ">=3.6.1"
+kazoo = "^2.8.0"
+Pygments = "^2.7.4"
+prompt-toolkit = "^3.0.14"
+colored = "^1.4.2"
+
+[tool.poetry.dev-dependencies]
+pytest-coverage = "^0.0"
+pytest-flake8 = "^1.0.7"
+pytest = "^6.2.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+izk = "izk.prompt:main"

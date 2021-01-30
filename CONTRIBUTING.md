@@ -5,32 +5,26 @@ First, thanks for even wanting to contribute to `izk`!
 ## Setup your environ,ent
 To work on `izk` itself, fork the repository and clone your fork to your local system.
 
-If you have `pipenv` installed, you can let it install the dependencies:
+If you have `poetry` installed, you can let it install the dependencies:
 
 ```shell
 $ cd path/to/izk
-$ pipenv install --dev --three
+$ poery install
 ```
 
-If you don't use `pipenv`, you can simply use `pip` (bear in mind that you need python3 for local development)
+If you don't use `poetry`, you can simply use `pip` (bear in mind that you need python3 for local development)
 
 ```shell
 $ cd path/to/izk
-$ pip install -r requirements.txt
-$ pip install -r requirements-dev.txt
+$ pip install .
 ```
 
 
 ## Run the tests
-To run the test suite locally when using `pipenv`
+To run the test suite locally when using `poetry`
 
 ```shell
-$ pipenv run py.test
-```
-
-Otherwise, just run
-```shell
-$ py.test
+$ poetry run pytest
 ```
 
 

@@ -1,6 +1,0 @@
--e .
-colored==1.3.5
-kazoo==2.8.0
-prompt-toolkit==1.0.15
-six==1.11.0
-wcwidth==0.1.7
