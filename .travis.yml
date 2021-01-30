@@ -8,7 +8,6 @@ install:
   - pip install -U pip
   - pip install poetry
   - poetry install
-  - poetry install coveralls
 script:
   - poetry run pytest
 after_success:

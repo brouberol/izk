@@ -16,6 +16,7 @@ colored = "^1.4.2"
 pytest-coverage = "^0.0"
 pytest-flake8 = "^1.0.7"
 pytest = "^6.2.2"
+coveralls = "^3.0.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
