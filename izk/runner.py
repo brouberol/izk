@@ -8,12 +8,12 @@ import os
 import colored
 from kazoo.exceptions import NoNodeError, NotEmptyError
 
-from .lexer import COMMAND, PATH, QUOTED_STR, KEYWORDS, FOUR_LETTER_WORD
+from .lexer import COMMAND, PATH, QUOTED_STR, KEYWORDS, ZK_FOUR_LETTER_WORD
 from .formatting import colorize, columnize, PARENT_ZNODE_STYLE
 from .validation import validate_command_input, ask_for_confirmation
 
 # A CLI user-input token can either be a command, a path or a string
-TOKEN = r'(%s)' % '|'.join([COMMAND, PATH, QUOTED_STR, FOUR_LETTER_WORD])
+TOKEN = r'(%s)' % '|'.join([COMMAND, PATH, QUOTED_STR, ZK_FOUR_LETTER_WORD])
 NODES_PER_LINE = 3
 
 

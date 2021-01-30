@@ -40,7 +40,7 @@ PATH = r'/[^\s]*'
 QUOTED_STR = r"('[^']*'|\"[^\"]*\")"
 
 # A single 4 letter word
-FOUR_LETTER_WORD = r'\w{4}'
+ZK_FOUR_LETTER_WORD = r'(conf|cons|crst|dump|envi|ruok|srst|srvr|stat|wchs|wchc|wchp|mntr)'
 
 
 class ZkCliLexer(RegexLexer):
@@ -48,7 +48,7 @@ class ZkCliLexer(RegexLexer):
     tokens = {
         'root': [
             (PATH, Text),
-            (FOUR_LETTER_WORD, Text),
+            (ZK_FOUR_LETTER_WORD, String),
             (QUOTED_STR, String),
             (words(KEYWORDS, suffix=r'\b'), Keyword),
         ],

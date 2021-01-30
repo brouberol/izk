@@ -1,7 +1,7 @@
 import re
 import functools
 
-from .lexer import COMMAND, PATH, FOUR_LETTER_WORD, QUOTED_STR
+from .lexer import COMMAND, PATH, ZK_FOUR_LETTER_WORD, QUOTED_STR
 
 
 def ask_for_confirmation(message, confirm_on_exc=False):
@@ -73,7 +73,7 @@ class CommandValidator:
         'help': Optional(COMMAND),
         'ls': PATH,
         'quit': None,
-        'raw': FOUR_LETTER_WORD,
+        'raw': ZK_FOUR_LETTER_WORD,
         'rmr': PATH,
         'set': [PATH, Optional(QUOTED_STR)],
         'stat': PATH,
