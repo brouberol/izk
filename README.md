@@ -61,7 +61,7 @@ optional arguments:
                         IZK_INPUT_MODE environment variable.
   --version             Display izk version number and exit
 
-Version: 0.4.3
+Version: 0.4.4
 ```
 
 

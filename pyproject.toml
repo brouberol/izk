@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "izk"
-version = "0.4.3"
+version = "0.4.4"
 description = "Zookeeper CLI with autocomplete, syntax highlighting and pretty printing"
 authors = ["Balthazar Rouberol <br@imap.cc>"]
 license = "Apache Software License"

@@ -1,3 +1,10 @@
+## 0.4.4
+
+- `raw` commands are now autocompleted to the Zookeeper 4 letter words
+- New commands: `tree` and `ftree` (thanks [`@mackong`](https://github.com/mackong)!)
+- Fix colorization of commands composed of 4 letters that are not zookeeper 4 letter words
+- Switch from Pipenv to Poetry to lock dependencies
+
 ## 0.3.1
 Improvements:
 - Enable vi mode by default
