@@ -1,7 +1,11 @@
-attrs==17.4.0
+attrs==20.3.0
 coverage==4.5.1
-pluggy==0.6.0
-py==1.5.2
+pluggy==0.13.1
+py==1.10.0
+pycodestyle==2.6.0
+pyflakes==2.2.0
+pyparsing==2.4.7
+pytest==6.2.2
 pytest-cov==2.5.1
-pytest==3.3.2
+pytest-flake8==1.0.7
 six==1.11.0
