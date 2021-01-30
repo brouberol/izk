@@ -2,7 +2,7 @@ import kazoo
 
 from prompt_toolkit.completion import Completer, Completion
 
-from .lexer import KEYWORDS
+from .lexer import KEYWORDS, ZK_FOUR_LETTER_WORDS
 
 
 class ZkCompleter(Completer):
@@ -14,24 +14,28 @@ class ZkCompleter(Completer):
         self.prev_typed_word = None
         self.cache = {}
 
+    def _completions(self, complete_from, word_before_cursor):
+        completions = [cmd for cmd in complete_from if cmd.startswith(word_before_cursor)]
+        for completion in completions:
+            yield Completion(completion, -len(word_before_cursor))
+
     def get_completions(self, document, complete_event):
         """The completions are either commands or paths"""
         word_before_cursor = document.get_word_before_cursor(WORD=True)
-
         # If command has been typed, store it
         if (
                 not self.command and
                 self.prev_typed_word in KEYWORDS and
                 word_before_cursor == ''
         ):
-            self.command = word_before_cursor
+            self.command = document.text.strip()
 
         # Find all possible completable commands
         self.prev_typed_word = word_before_cursor
         if self.command is None:
-            completions = [cmd for cmd in KEYWORDS if cmd.startswith(word_before_cursor)]
-            for completion in completions:
-                yield Completion(completion, -len(word_before_cursor))
+            yield from self._completions(KEYWORDS, word_before_cursor)
+        elif self.command == "raw":
+            yield from self._completions(ZK_FOUR_LETTER_WORDS, word_before_cursor)
         else:
             # Autocomplete on the path of available znodes
             path = word_before_cursor

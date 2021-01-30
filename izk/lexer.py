@@ -40,7 +40,12 @@ PATH = r'/[^\s]*'
 QUOTED_STR = r"('[^']*'|\"[^\"]*\")"
 
 # A single 4 letter word
-ZK_FOUR_LETTER_WORD = r'(conf|cons|crst|dump|envi|ruok|srst|srvr|stat|wchs|wchc|wchp|mntr)'
+ZK_FOUR_LETTER_WORDS = [
+    "conf", "cons", "crst", "dump",
+    "envi", "ruok", "srst", "srvr",
+    "stat", "wchs", "wchc", "wchp", "mntr"
+]
+ZK_FOUR_LETTER_WORD = r'(%s)' % ('|'.join(ZK_FOUR_LETTER_WORDS))
 
 
 class ZkCliLexer(RegexLexer):
