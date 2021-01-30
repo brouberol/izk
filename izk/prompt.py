@@ -139,7 +139,6 @@ def run_cmd(runner, cmd):
             print(out)
 
 
-
 def main():  # pragma: no cover
     cmd_index = 0
     args = parse_args()
@@ -169,7 +168,7 @@ def main():  # pragma: no cover
                     style=style_from_pygments_cls(g.style),
                     vi_mode=args.input_mode == 'vi')
                 run_cmd(cmdrunner, cmd)
-            except (KeyboardInterrupt, EOFError) as exc:
+            except (KeyboardInterrupt, EOFError):
                 if ask_for_confirmation('Quit?', confirm_on_exc=True):
                     break
             except Exception:

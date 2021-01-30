@@ -35,8 +35,8 @@ class Token(str):
 
     def __add__(self, other):
         if isinstance(other, Optional):
-            return '%s\s*%s' % (str(self), str(other))
-        return '%s\s+%s' % (str(self), str(other))
+            return r'%s\s*%s' % (str(self), str(other))
+        return r'%s\s+%s' % (str(self), str(other))
 
 
 class Optional(Token):

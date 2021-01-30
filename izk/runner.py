@@ -105,7 +105,7 @@ class ZkCommandRunner:
         """
         try:
             nodes = self.zkcli.get_children(path)
-        except NoNodeError as exc:
+        except NoNodeError:
             raise NoNodeError('%s does not exist' % (path))
 
         nodes = sorted(nodes)

@@ -11,10 +11,10 @@ STYLE_NAMES = list(styles.get_all_styles()) + ['none']
 PARENT_ZNODE_STYLE = angry = colored.fg("blue") + colored.attr("bold")
 
 
-def chunks(l, n):
+def chunks(sequence, num_chunks):
     """Yield successive n-sized chunks from l."""
-    for i in range(0, len(l), n):
-        yield l[i:i + n]
+    for i in range(0, len(sequence), num_chunks):
+        yield sequence[i:i + num_chunks]
 
 
 def columnize(items, nb_columns):
