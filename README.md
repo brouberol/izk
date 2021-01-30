@@ -63,3 +63,19 @@ optional arguments:
 
 Version: 0.4.3
 ```
+
+
+## Local Development
+
+If you plan on developing on `izk`, you can install the local code by running
+
+```shell
+$ pip install .
+$ izk # should now be in your shell
+```
+
+You can then start a local zookeeper instance by running
+
+```shell
+$ docker run -it -p 2181:2181 --name zookeeper --rm zookeeper
+```
