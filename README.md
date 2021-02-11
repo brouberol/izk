@@ -70,8 +70,7 @@ Version: 0.4.4
 If you plan on developing on `izk`, you can install the local code by running
 
 ```shell
-$ pip install .
-$ izk # should now be in your shell
+$ poetry run izk
 ```
 
 You can then start a local zookeeper instance by running
