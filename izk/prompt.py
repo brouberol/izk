@@ -2,6 +2,7 @@ import argparse
 import threading
 import os
 
+from pathlib import Path
 from prompt_toolkit.shortcuts import prompt
 from prompt_toolkit.history import InMemoryHistory
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
@@ -35,6 +36,21 @@ g = threading.local()
 DEFAULT_ZK_URL = 'localhost:2181'
 DEFAULT_COLOR_STYLE = 'monokai'
 DEFAULT_INPUT_MODE = 'vi'
+EDITING_MODE_CHOICES = ('vi', 'emacs')
+
+def infer_input_mode_from_inputrc():
+    editing_mode = None
+    try:
+        with open(Path.home() / '.inputrc') as inputrc:
+            for line in inputrc:
+                if 'editing-mode' in line:
+                    inputrc_editing_mode = line.split()[2].lower()
+                    if inputrc_editing_mode in EDITING_MODE_CHOICES:
+                        editing_mode = inputrc_editing_mode
+    except FileNotFoundError:
+        pass
+    finally:
+        return editing_mode
 
 
 class EnvDefault(argparse.Action):
@@ -74,6 +90,7 @@ class EnvDefault(argparse.Action):
 
 
 def parse_args():
+    default_input_mode = infer_input_mode_from_inputrc() or DEFAULT_INPUT_MODE
     parser = argparse.ArgumentParser(
         description="CLI for zookeeper with syntax-highlighting and auto-completion.",
         epilog="Version: %s" % (__version__))
@@ -102,10 +119,10 @@ def parse_args():
         choices=STYLE_NAMES)
     parser.add_argument(
         '--input-mode',
-        help="The input mode to adopt. Default: %s" % (DEFAULT_INPUT_MODE),
+        help="The input mode to adopt. Default: %s" % (default_input_mode),
         action=EnvDefault,
-        default=DEFAULT_INPUT_MODE,
-        choices=('vi', 'emacs'))
+        default=default_input_mode,
+        choices=EDITING_MODE_CHOICES)
     parser.add_argument(
         '--version',
         help="Display izk version number and exit",
