@@ -47,6 +47,7 @@ def infer_input_mode_from_inputrc():
                     inputrc_editing_mode = line.split()[2].lower()
                     if inputrc_editing_mode in EDITING_MODE_CHOICES:
                         editing_mode = inputrc_editing_mode
+                break
     except FileNotFoundError:
         pass
     finally:
