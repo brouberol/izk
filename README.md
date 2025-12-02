@@ -1,3 +1,6 @@
+> [!WARNING]  
+> Moved to https://git.balthazar-rouberol.com/brouberol/izk
+
 # IZK: interactive zookeeper
 
 [![Build Status](https://travis-ci.org/brouberol/izk.svg?branch=master)](https://travis-ci.org/brouberol/izk) [![Coverage Status](https://coveralls.io/repos/github/brouberol/izk/badge.svg?branch=master)](https://coveralls.io/github/brouberol/izk?branch=master)
